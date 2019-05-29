@@ -12,9 +12,24 @@ $('#world-map').on("click", function () {
 
 });
 
+$(document).on("click",'.gif', function () {
+    event.stopPropagation();
+    // console.log("hi");
+    var state = $(this).attr("data-state");
+
+    if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+    } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    }
+});
+
+
 $(document).on("click",'.topic-button', function () {
     event.stopPropagation();
-    console.log(this);
+    // console.log(this);
     showGifs($(this).attr("data-topic"));
 
 });
@@ -123,18 +138,9 @@ function showGifs(topic) {
 
             $("#gif-panel").prepend($("<hr>"));
 
-            $(".gif").on("click", function () {
-                var state = $(this).attr("data-state");
 
-                if (state === "still") {
-                    $(this).attr("src", $(this).attr("data-animate"));
-                    $(this).attr("data-state", "animate");
-                } else {
-                    $(this).attr("src", $(this).attr("data-still"));
-                    $(this).attr("data-state", "still");
-                }
-            });
 
         });
 }
+
 
