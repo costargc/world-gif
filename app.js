@@ -95,24 +95,33 @@ function showGifs(topic) {
             console.log(results);
             var j = 0;
             // Looping through each result item
+
             for (var i = 0; i < results.length; i++) {
                 var topicDiv = $("<div class='d-inline-block'>");
                 var rating = results[i].rating.toUpperCase();
                 var span = $("<span>").text("Rated: " + rating);
                 var topicImage = $("<img>");
+
                 topicImage.addClass("gif");
                 topicImage.attr("src", results[i].images.fixed_height_still.url);
                 topicImage.attr("data-state", "still");
                 topicImage.attr("data-still", results[i].images.fixed_height_still.url);
                 topicImage.attr("data-animate", results[i].images.fixed_height.url);
+
                 topicDiv.append(topicImage);
                 topicDiv.append('<br><a href="' + results[i].images.original.url + '" target="_blank" download>Link</a>');
                 topicDiv.append('<br>');
                 topicDiv.append(span);
+
                 j++;
+
                 if (j === colors.length) { j = 0; }
+
                 $("#gif-panel").prepend(topicDiv);
+
             }
+
+            $("#gif-panel").prepend($("<hr>"));
 
             $(".gif").on("click", function () {
                 var state = $(this).attr("data-state");
