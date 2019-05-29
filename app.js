@@ -92,7 +92,7 @@ function showGifs(topic) {
     })
         .then(function (response) {
             var results = response.data;
-            console.log(results);
+            // console.log(results);
             var j = 0;
             // Looping through each result item
 
