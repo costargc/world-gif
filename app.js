@@ -3,7 +3,7 @@ $('#world-map').on("click", function () {
     var topic = $('.jvectormap-tip').html().trim();
     topic = topic.toUpperCase();
     $("#topic-input").val('');
-    if (topics.indexOf(topic) == -1 && topic != "" ) {
+    if (topics.indexOf(topic) == -1 && topic != "") {
         topics.push(topic);
         renderButtons();
     }
@@ -12,11 +12,18 @@ $('#world-map').on("click", function () {
 
 });
 
+$(document).on("click",'.topic-button', function () {
+    event.stopPropagation();
+    console.log(this);
+    showGifs($(this).attr("data-topic"));
+
+});
+
 
 $(function () {
     $('#world-map').vectorMap({
         map: 'world_mill',
-        zoomOnScroll: true,
+        zoomOnScroll: false,
         backgroundColor: 'white',
         regionStyle: {
             initial: {
@@ -50,7 +57,7 @@ var topics = [];
 var colors = ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"];
 
 
-renderButtons();
+
 
 function renderButtons() {
 
@@ -65,8 +72,8 @@ function renderButtons() {
         button.attr("data-topic", topics[i]);
         button.text(topics[i]);
         j++;
-        if (j === colors.length){j = 0;}
-            
+        if (j === colors.length) { j = 0; }
+
 
         $("#buttons").append(button);
 
@@ -74,10 +81,7 @@ function renderButtons() {
 }
 
 
-$('.topic-button').on("click", function () {
 
-showGifs($(this).attr("data-topic"));
-});
 
 function showGifs(topic) {
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=" + APIkey + "&limit=10";
@@ -106,7 +110,7 @@ function showGifs(topic) {
                 topicDiv.append('<br>');
                 topicDiv.append(span);
                 j++;
-                if (j === colors.length){j = 0;}
+                if (j === colors.length) { j = 0; }
                 $("#gif-panel").prepend(topicDiv);
             }
 
