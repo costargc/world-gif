@@ -1,18 +1,39 @@
+
+var colors = ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"];
+
+
+if (JSON.parse(localStorage.getItem("mytopics")) != null) {
+    topics = JSON.parse(localStorage.getItem("mytopics"));
+}
+else {
+    var topics = [];
+}
+if (topics.length > 0) {
+    document.getElementById("visits").style.display = "flex";
+    renderButtons();
+}
+
+
 $('#world-map').on("click", function () {
     event.preventDefault();
     var topic = $('.jvectormap-tip').html().trim();
     topic = topic.toUpperCase();
-    $("#topic-input").val('');
+    $("#topic-input").val();
     if (topics.indexOf(topic) == -1 && topic != "") {
         topics.push(topic);
+        localStorage.setItem("mytopics", JSON.stringify(topics));
         renderButtons();
     }
 
     showGifs(topic);
+    if (topics.length > 0) {
+        document.getElementById("visits").style.display = "flex";
+    }
+
 
 });
 
-$(document).on("click",'.gif', function () {
+$(document).on("click", '.gif', function () {
     event.stopPropagation();
     // console.log("hi");
     var state = $(this).attr("data-state");
@@ -27,7 +48,7 @@ $(document).on("click",'.gif', function () {
 });
 
 
-$(document).on("click",'.topic-button', function () {
+$(document).on("click", '.topic-button', function () {
     event.stopPropagation();
     // console.log(this);
     showGifs($(this).attr("data-topic"));
@@ -65,13 +86,6 @@ $(function () {
     });
 });
 
-var APIkey = "nECr5SIz2j118Kp1zdxDW0LB8Ynat2e0";
-
-var topics = [];
-
-var colors = ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"];
-
-
 
 
 function renderButtons() {
@@ -99,6 +113,7 @@ function renderButtons() {
 
 
 function showGifs(topic) {
+    var APIkey = "nECr5SIz2j118Kp1zdxDW0LB8Ynat2e0";
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=" + APIkey + "&limit=10";
 
     $.ajax({
@@ -138,6 +153,7 @@ function showGifs(topic) {
 
             $("#gif-panel").prepend($("<hr>"));
 
+            document.getElementById("gifs-show").style.display = "flex";
 
 
         });

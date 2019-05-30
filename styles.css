@@ -22,9 +22,20 @@ span, a, img {
     font-size: 13px;
   }
 
-  br {
+br {
     display: block;
     margin: -5px 0px;
     line-height:0px;
     content: "";
  }
+
+ #gif-panel{
+    text-align: center;
+ }
+
+#gifs-show{
+    display: none;
+}
+#visits{
+    display: none;
+}
