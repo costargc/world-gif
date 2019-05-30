@@ -2,31 +2,30 @@
 var colors = ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"];
 
 
-if (JSON.parse(localStorage.getItem("mytopics")) != null) {
-    topics = JSON.parse(localStorage.getItem("mytopics"));
+if (JSON.parse(localStorage.getItem("mycountries")) != null) {
+    countries = JSON.parse(localStorage.getItem("mycountries"));
 }
 else {
-    var topics = [];
+    var countries = [];
 }
-if (topics.length > 0) {
+if (countries.length > 0) {
     document.getElementById("visits").style.display = "flex";
     renderButtons();
 }
 
-
 $('#world-map').on("click", function () {
     event.preventDefault();
-    var topic = $('.jvectormap-tip').html().trim();
-    topic = topic.toUpperCase();
-    $("#topic-input").val();
-    if (topics.indexOf(topic) == -1 && topic != "") {
-        topics.push(topic);
-        localStorage.setItem("mytopics", JSON.stringify(topics));
+    var place = $('.jvectormap-tip').html().trim();
+    place = place.toUpperCase();
+    $("#place-input").val();
+    if (countries.indexOf(place) == -1 && place != "") {
+        countries.push(place);
+        localStorage.setItem("mycountries", JSON.stringify(countries));
         renderButtons();
     }
 
-    showGifs(topic);
-    if (topics.length > 0) {
+    showGifs(place);
+    if (countries.length > 0) {
         document.getElementById("visits").style.display = "flex";
     }
 
@@ -48,10 +47,10 @@ $(document).on("click", '.gif', function () {
 });
 
 
-$(document).on("click", '.topic-button', function () {
+$(document).on("click", '.place-button', function () {
     event.stopPropagation();
     // console.log(this);
-    showGifs($(this).attr("data-topic"));
+    showGifs($(this).attr("data-place"));
 
 });
 
@@ -93,13 +92,13 @@ function renderButtons() {
     $("#buttons").empty();
     var j = 0;
 
-    for (var i = 0; i < topics.length; i++) {
+    for (var i = 0; i < countries.length; i++) {
         var button = $("<button>");
 
-        button.addClass("topic-button btn btn-" + colors[j]);
+        button.addClass("place-button btn btn-" + colors[j]);
         button.attr("type", "button");
-        button.attr("data-topic", topics[i]);
-        button.text(topics[i]);
+        button.attr("data-place", countries[i]);
+        button.text(countries[i]);
         j++;
         if (j === colors.length) { j = 0; }
 
@@ -112,9 +111,9 @@ function renderButtons() {
 
 
 
-function showGifs(topic) {
+function showGifs(place) {
     var APIkey = "nECr5SIz2j118Kp1zdxDW0LB8Ynat2e0";
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=" + APIkey + "&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + place + "&api_key=" + APIkey + "&limit=10";
 
     $.ajax({
         url: queryURL,
@@ -127,27 +126,27 @@ function showGifs(topic) {
             // Looping through each result item
 
             for (var i = 0; i < results.length; i++) {
-                var topicDiv = $("<div class='d-inline-block'>");
+                var placeDiv = $("<div class='d-inline-block'>");
                 var rating = results[i].rating.toUpperCase();
                 var span = $("<span>").text("Rated: " + rating);
-                var topicImage = $("<img>");
+                var placeImage = $("<img>");
 
-                topicImage.addClass("gif");
-                topicImage.attr("src", results[i].images.fixed_height_still.url);
-                topicImage.attr("data-state", "still");
-                topicImage.attr("data-still", results[i].images.fixed_height_still.url);
-                topicImage.attr("data-animate", results[i].images.fixed_height.url);
+                placeImage.addClass("gif");
+                placeImage.attr("src", results[i].images.fixed_height_still.url);
+                placeImage.attr("data-state", "still");
+                placeImage.attr("data-still", results[i].images.fixed_height_still.url);
+                placeImage.attr("data-animate", results[i].images.fixed_height.url);
 
-                topicDiv.append(topicImage);
-                topicDiv.append('<br><a href="' + results[i].images.original.url + '" target="_blank" download>Link</a>');
-                topicDiv.append('<br>');
-                topicDiv.append(span);
+                placeDiv.append(placeImage);
+                placeDiv.append('<br><a href="' + results[i].images.original.url + '" target="_blank" download>Link</a>');
+                placeDiv.append('<br>');
+                placeDiv.append(span);
 
                 j++;
 
                 if (j === colors.length) { j = 0; }
 
-                $("#gif-panel").prepend(topicDiv);
+                $("#gif-panel").prepend(placeDiv);
 
             }
 
