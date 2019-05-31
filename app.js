@@ -1,17 +1,19 @@
+colors = ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"];
 
-var colors = ["primary", "secondary", "success", "danger", "warning", "info", "light", "dark"];
+startPage();
 
 
-if (JSON.parse(localStorage.getItem("mycountries")) != null) {
-    countries = JSON.parse(localStorage.getItem("mycountries"));
-}
-else {
-    var countries = [];
-}
-if (countries.length > 0) {
-    document.getElementById("visits").style.display = "flex";
+
+
+
+$('#clearCountries').on("click", function () {
+    event.preventDefault();
+    localStorage.removeItem("mycountries");
+    startPage();
     renderButtons();
-}
+    location.reload();
+
+});
 
 $('#world-map').on("click", function () {
     event.preventDefault();
@@ -29,7 +31,7 @@ $('#world-map').on("click", function () {
         document.getElementById("visits").style.display = "flex";
     }
 
-
+    startPage();
 });
 
 $(document).on("click", '.gif', function () {
@@ -44,6 +46,7 @@ $(document).on("click", '.gif', function () {
         $(this).attr("src", $(this).attr("data-still"));
         $(this).attr("data-state", "still");
     }
+    startPage();
 });
 
 
@@ -51,7 +54,7 @@ $(document).on("click", '.place-button', function () {
     event.stopPropagation();
     // console.log(this);
     showGifs($(this).attr("data-place"));
-
+    startPage();
 });
 
 
@@ -85,6 +88,25 @@ $(function () {
     });
 });
 
+function startPage() {
+    if (JSON.parse(localStorage.getItem("mycountries")) != null) {
+        countries = JSON.parse(localStorage.getItem("mycountries"));
+        document.getElementById("clearCountries").style.display = "flex";
+    }
+    else {
+        countries = [];
+        document.getElementById("clearCountries").style.display = "none";
+    }
+
+    if (countries.length > 0) {
+        document.getElementById("visits").style.display = "flex";
+        renderButtons();
+    }
+    else {
+        document.getElementById("visits").style.display = "none";
+        renderButtons();
+    }
+};
 
 
 function renderButtons() {

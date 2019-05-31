@@ -39,3 +39,10 @@ br {
 #visits{
     display: none;
 }
+
+#clearCountries{
+    display: block;
+    margin: -20px auto 10px auto;
+    line-height:20px;
+    display: none;
+}
