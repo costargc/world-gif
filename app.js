@@ -134,7 +134,7 @@ function renderButtons() {
 
 
 function showGifs(place) {
-    var APIkey = "N0cWjMKmQwmVr5KxTdt6JhNyOAJtwzGw";
+    var APIkey = "GUe4o7ol0PZ3lS6IkLJkYFYDSmxL2pEz";
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + place + "&api_key=" + APIkey + "&limit=10";
 
     $.ajax({
